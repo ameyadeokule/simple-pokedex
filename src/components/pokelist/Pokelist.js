@@ -1,22 +1,27 @@
-import React from 'react'
-import './pokelist.css'
-import Pokecard from '../pokecard/Pokecard'
+import React from 'react';
 
-function Pokelist({pokemons}) {
+import Pokecard from './../pokecard/Pokecard'
+
+import './pokelist.css';
+
+const Pokelist = ({ pokemons, handleClick }) => {
     return (
-        <div className='pokelist'>
+        <div className="pokelist">
             {
-                pokemons.map(pokemon=>{
-                    let sprite = null
-                    
-                    try{
-                        sprite = JSON.parse(pokemon.sprite)
-                        sprite = sprite.normal
+                pokemons.map(pokemon => {
+                    let sprite = null;
+                    try {
+                        sprite = JSON.parse(pokemon.sprites);
+                        sprite = sprite.normal;
+                    } catch (error) {
+                        
                     }
-                    catch(error){
-                        console.log(error)
-                    }
-                    return pokemon.name && <Pokecard name={pokemon.name} sprite={sprite} key={pokemon.id} /> 
+                    return pokemon.name ? <Pokecard 
+                        key={pokemon.id} 
+                        id={pokemon.id} 
+                        name={pokemon.name} 
+                        sprite={sprite}
+                        handleClick={handleClick} /> : null;
                 })
             }
         </div>

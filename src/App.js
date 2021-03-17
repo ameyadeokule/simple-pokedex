@@ -5,7 +5,7 @@ import { pokemonData } from "./data/pokemonData";
 
 function App() {
   
-  const [pokemons,setPokemons]=useState([])
+  const [pokemons, setPokemons]=useState([])
   const [searchField, setSearchField]= useState('')
   const [selectedPokemon, setSelectedPokemon]= useState(null)
   
@@ -14,10 +14,24 @@ function App() {
   }
   ,[pokemons])
   
+  const searchFieldUpdate = (searchField) => {
+		setSearchField( searchField );
+	}
+  
+  const handleClick = (name) => {
+		let selectedPokemon = pokemons.find(pokemon => pokemon.name === name);
+		setSelectedPokemon(selectedPokemon);
+	}
+  
+  const searchPokemons = pokemons.filter(pokemon=>{
+    return pokemon.name ? pokemon.name.toLowerCase().includes(searchField.toLowerCase()):false
+  });
+  
   return (
+    
     <div className="App">
     <h1>Pokedex</h1>
-    <Pokedex pokemons={pokemons}/>
+    <Pokedex pokemons={searchPokemons} searchFieldUpdate={searchFieldUpdate} handleClick={handleClick} selectedPokemon={selectedPokemon} />
     </div>
   );
 }
